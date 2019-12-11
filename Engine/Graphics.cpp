@@ -316,6 +316,19 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawSprite(Vei2 pos, const Surface& surf)
+{
+	const int width = surf.GetWidth();
+	const int height = surf.GetHeight();
+	for (int py = 0; py < height; py++)
+	{
+		for (int px = 0; px < width; px++)
+		{
+			PutPixel(px + pos.x, py + pos.y, surf.GetPixel(px, py));
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
