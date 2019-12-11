@@ -28,7 +28,7 @@ Surface::Surface(std::string filename)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			pPixels[y * width + x] = Color(in.get(), in.get(), in.get());
+			PutPixel(x, y, Color(in.get(), in.get(), in.get()));
 		}
 		in.seekg(padding, std::ios::cur);
 	}
@@ -57,7 +57,7 @@ Surface& Surface::operator=(const Surface& CopySurface)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			pPixels[]
+			PutPixel(x, y, CopySurface.GetPixel(x, y));
 		}
 	}
 
@@ -77,4 +77,13 @@ int Surface::GetHeight() const
 Color Surface::GetPixel(int x, int y) const
 {
 	return pPixels[y * width + x];
+}
+
+void Surface::PutPixel(int x, int y, Color c) const
+{
+	assert(x >= 0);
+	assert(x < width);
+	assert(y >= 0);
+	assert(y < height);
+	pPixels[y * width + x] = c;
 }

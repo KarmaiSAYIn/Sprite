@@ -16,6 +16,8 @@ public:
 	int GetHeight() const;
 	Color GetPixel(int x, int y) const;
 
+	void PutPixel(int x, int y, Color c) const;
+
 private:
 	int width = -1;
 	int height = -1;
