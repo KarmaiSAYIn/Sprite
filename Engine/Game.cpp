@@ -24,8 +24,7 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd ),
-	test("dib.bmp")
+	gfx( wnd )
 {
 }
 
@@ -43,7 +42,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite({ 200, 200 }, test);
-	Surface s = test;
-	gfx.DrawSprite({ 0, 0 }, s);
+	gfx.DrawSprite(wnd.mouse.GetPos() - Vei2(16, 24), test, { 0, 32, 0, 48 });
 }

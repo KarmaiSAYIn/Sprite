@@ -14,21 +14,42 @@ Surface::Surface(std::string filename)
 	in.read(reinterpret_cast<char*>(&bmpFileH), sizeof(bmpFileH));
 	in.read(reinterpret_cast<char*>(&bmpInfoH), sizeof(bmpInfoH));
 
-	assert(bmpInfoH.biBitCount == 24);
+	assert(bmpInfoH.biBitCount == 24 || bmpInfoH.biBitCount == 32);
 	assert(bmpInfoH.biCompression == BI_RGB);
 
 	width = bmpInfoH.biWidth;
 	height = bmpInfoH.biHeight;
 
+	int yStart, yEnd, yDelta;
+	if (height < 0)
+	{
+		height *= -1;
+		yStart = 0;
+		yEnd = height - 1;
+		yDelta = 1;
+	}
+	else
+	{
+		yStart = height - 1;
+		yEnd = 0;
+		yDelta = -1;
+	}
+
 	pPixels = new Color[width * height];
 
 	in.seekg(bmpFileH.bfOffBits);
 	const int padding = (4 - (width * 3) % 4) % 4;
-	for (int y = height - 1; y >= 0; y--)
+	for (int y = yStart; y != yEnd; y += yDelta)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			PutPixel(x, y, Color(in.get(), in.get(), in.get()));
+			Color c;
+			if (bmpInfoH.biBitCount == 32)
+				c = Color(in.get(), in.get(), in.get(), in.get());
+			else
+				c = Color(in.get(), in.get(), in.get());
+
+			PutPixel(x, y, c);
 		}
 		in.seekg(padding, std::ios::cur);
 	}

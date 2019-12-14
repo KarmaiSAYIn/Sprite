@@ -44,6 +44,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Surface test;
+	Surface test = Surface("marle32x48.bmp");
 	/********************************/
 };

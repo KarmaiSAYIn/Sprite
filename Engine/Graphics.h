@@ -26,6 +26,7 @@
 #include "Colors.h"
 #include "Surface.h"
 #include "Vei2.h"
+#include "RectI.h"
 
 class Graphics
 {
@@ -59,7 +60,10 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void DrawSprite(Vei2 pos, const Surface& surf);
+	void DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea = GetScreenRect(),Color chroma = Colors::Magenta);
+	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf);
+	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf, const RectI& SourceArea);
+	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
@@ -78,4 +82,6 @@ private:
 public:
 	static constexpr int ScreenWidth = 800;
 	static constexpr int ScreenHeight = 600;
+
+	static RectI GetScreenRect();
 };
