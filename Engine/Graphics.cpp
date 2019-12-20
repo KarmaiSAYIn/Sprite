@@ -321,6 +321,16 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawSprite(Vei2 pos, const Surface& surf, Color chroma)
+{
+	DrawSprite(pos, surf, surf.GetRect(), chroma);
+}
+
+void Graphics::DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, Color chroma)
+{
+	DrawSprite(pos, surf, SourceArea, GetScreenRect(), chroma);
+}
+
 void Graphics::DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea, Color chroma)
 {
 	assert(SourceArea.left >= 0);

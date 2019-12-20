@@ -100,6 +100,11 @@ Color Surface::GetPixel(int x, int y) const
 	return pPixels[y * width + x];
 }
 
+RectI Surface::GetRect() const
+{
+	return RectI(0, width, 0, height);
+}
+
 void Surface::PutPixel(int x, int y, Color c) const
 {
 	assert(x >= 0);
