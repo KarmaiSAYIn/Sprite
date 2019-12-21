@@ -27,14 +27,15 @@ void Animation::Update(float fElapsedTime)
 		nCurrentFrame++;
 		if (nCurrentFrame >= nFrames)
 		{
-			nCurrentFrame = 0;
+			nCurrentFrame = 1; //Restart animation excluding the standing part.
+			fFrameElapsedTime = 0.0f;
 			break;
 		}
 		fFrameElapsedTime -= fFrameTime;
 	}
 }
 
-void Animation::Draw(Vei2 pos, Graphics& gfx)
+void Animation::Draw(Vei2 pos, Graphics& gfx) const
 {
 	gfx.DrawSprite(pos, SpriteSheet, frames[nCurrentFrame]);
 }

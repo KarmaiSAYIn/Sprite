@@ -12,7 +12,7 @@ public:
 	Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime);
 
 	void Update(float fElapsedTime);
-	void Draw(Vei2 pos, Graphics& gfx);
+	void Draw(Vei2 pos, Graphics& gfx) const;
 
 private:
 	Surface& SpriteSheet;

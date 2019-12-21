@@ -25,7 +25,7 @@
 #include "Graphics.h"
 #include "Surface.h"
 #include "Vei2.h"
-#include "Animation.h"
+#include "Character.h"
 #include "Time.h"
 
 class Game
@@ -48,6 +48,6 @@ private:
 	/*  User Variables              */
 	Time time;
 	Surface surf = Surface("link90x90.bmp");
-	Animation animation = Animation(surf, { 0, 90 }, 90, 90, 5, 0.125f);
+	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.125f);
 	/********************************/
 };

@@ -38,10 +38,36 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	animation.Update(time.Mark());
+	Vec2 delta_pos = { 0, 0 };
+	character.StopMovment();
+	if (wnd.kbd.KeyIsPressed('W'))
+	{
+		character.SetDirection({ 0, 1 });
+		delta_pos.y = -1.0f ;
+	}
+
+	if (wnd.kbd.KeyIsPressed('A'))
+	{
+		character.SetDirection({ -1, 0 });
+		delta_pos.x = -1.0f;
+	}
+
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		character.SetDirection({ 0, -1 });
+		delta_pos.y = 1.0f;
+	}
+
+	if (wnd.kbd.KeyIsPressed('D'))
+	{
+		character.SetDirection({ 1, 0 });
+		delta_pos.x = 1.0f;
+	}
+
+	character.Update(time.Mark(), delta_pos);
 }
 
 void Game::ComposeFrame()
 {
-	animation.Draw(wnd.mouse.GetPos(), gfx);
+	character.Draw(gfx);
 }
