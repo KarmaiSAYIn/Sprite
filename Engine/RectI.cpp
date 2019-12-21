@@ -44,6 +44,11 @@ RectI RectI::FromCenter( const Vei2 & center,int halfWidth,int halfHeight )
 	return RectI( center - half,center + half );
 }
 
+void RectI::TranslateFromCenter(const Vei2& pos)
+{
+	*this = FromCenter(pos, GetWidth() / 2, GetHeight() / 2);
+}
+
 RectI RectI::GetExpanded( int offset ) const
 {
 	return RectI( left - offset,right + offset,top - offset,bottom + offset );

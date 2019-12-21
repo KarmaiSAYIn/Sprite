@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "Surface.h"
 #include "Vei2.h"
+#include "Animation.h"
+#include "Time.h"
 
 class Game
 {
@@ -44,6 +46,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Surface test = Surface("marle32x48.bmp");
+	Time time;
+	Surface surf = Surface("link90x90.bmp");
+	Animation animation = Animation(surf, { 0, 90 }, 90, 90, 5, 0.125f);
 	/********************************/
 };

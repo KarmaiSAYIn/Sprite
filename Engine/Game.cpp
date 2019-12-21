@@ -38,9 +38,10 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	animation.Update(time.Mark());
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(wnd.mouse.GetPos() - Vei2(16, 24), test, RectI{ 0, 32, 0, 48 });
+	animation.Draw(wnd.mouse.GetPos(), gfx);
 }

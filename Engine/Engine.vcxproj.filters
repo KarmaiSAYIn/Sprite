@@ -69,6 +69,15 @@
     <ClInclude Include="RectI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -110,6 +119,15 @@
     <ClCompile Include="RectI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
@@ -138,6 +156,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="marle32x48.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="link90x90.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pilgrim108x140.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

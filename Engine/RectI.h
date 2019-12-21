@@ -13,6 +13,7 @@ public:
 	bool IsContainedBy( const RectI& other ) const;
 	bool Contains( const Vei2& point ) const;
 	static RectI FromCenter( const Vei2& center,int halfWidth,int halfHeight );
+	void TranslateFromCenter(const Vei2& pos);
 	RectI GetExpanded( int offset ) const;
 	Vei2 GetCenter() const;
 	int GetWidth() const;
