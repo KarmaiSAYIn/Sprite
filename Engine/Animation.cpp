@@ -19,6 +19,23 @@ Animation::Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, i
 	}
 }
 
+int Animation::GetCurrentFrame() const
+{
+	return nCurrentFrame;
+}
+
+void Animation::SetFrame(int nFrame)
+{
+	assert(nFrame >= 0);
+	assert(nFrame < nFrames);
+	nCurrentFrame = nFrame;
+}
+
+void Animation::SetToStandingFrame()
+{
+	nCurrentFrame = 0;
+}
+
 void Animation::Update(float fElapsedTime)
 {
 	fFrameElapsedTime += fElapsedTime;

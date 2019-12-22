@@ -48,6 +48,6 @@ private:
 	/*  User Variables              */
 	Time time;
 	Surface surf = Surface("link90x90.bmp");
-	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.125f);
+	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.525f, 110.0f);
 	/********************************/
 };

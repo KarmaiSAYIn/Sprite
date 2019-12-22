@@ -11,6 +11,10 @@ public:
 	Animation() = delete;
 	Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime);
 
+	int GetCurrentFrame() const;
+
+	void SetFrame(int nFrame);
+	void SetToStandingFrame();
 	void Update(float fElapsedTime);
 	void Draw(Vei2 pos, Graphics& gfx) const;
 

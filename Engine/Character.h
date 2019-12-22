@@ -12,7 +12,7 @@ class Character
 public:
 
 	Character(const Vec2& pos, Surface& SpriteSheet, const Vei2& SpriteSheetPos,
-		int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime, Color chroma = Colors::Magenta);
+		int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime, float fSpeed, Color chroma = Colors::Magenta);
 
 	void StopMovment();
 	void StartMovment();
@@ -42,6 +42,6 @@ private:
 	Sequence currSequence = Sequence::Left;
 	std::vector<Animation> SequenceAnimations;
 
-	float fSpeed = 80.0f;
+	float fSpeed = -1.0f;
 };
 
