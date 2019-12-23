@@ -60,11 +60,14 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void DrawSprite(Vei2 pos, const Surface& surf, Color chroma = Colors::Magenta);
-	void DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, Color chroma = Colors::Magenta);
+	void DrawSprite(const Vei2& pos, const Surface& surf, Color chroma = Colors::Magenta);
+	void DrawSprite(const Vei2& pos, const Surface& surf, RectI SourceArea, Color chroma = Colors::Magenta);
 	void DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea, Color chroma = Colors::Magenta);
-	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf);
-	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf, const RectI& SourceArea);
+	void DrawSpriteSubstitution(const Vei2& pos, const Surface& surf, Color chroma, Color Substitution);
+	void DrawSpriteSubstitution(const Vei2& pos, const Surface& surf, RectI SourceArea, Color chroma, Color Substitution);
+	void DrawSpriteSubstitution(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea, Color chroma, Color Substitution);
+	void DrawSpriteNonChroma(const Vei2& pos, const Surface& surf);
+	void DrawSpriteNonChroma(const Vei2& pos, const Surface& surf, const RectI& SourceArea);
 	void DrawSpriteNonChroma(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea);
 	~Graphics();
 private:

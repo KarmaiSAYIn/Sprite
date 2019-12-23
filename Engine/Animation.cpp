@@ -2,13 +2,14 @@
 #include "RectI.h"
 #include <assert.h>
 
-Animation::Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime)
+Animation::Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime, Color chroma)
 	:
 	nFrames(nFrames),
 	fFrameTime(fFrameTime),
 	nSpriteWidth(nSpriteWidth),
 	nSpriteHeight(nSpriteHeight),
-	SpriteSheet(SpriteSheet)
+	SpriteSheet(SpriteSheet),
+	chroma(chroma)
 {
 	//Insures that no frames of animations can be drawn from an area outside of the sprite sheet.
 	assert(RectI(StartingPos.x, StartingPos.x + nSpriteWidth * nFrames, StartingPos.y, StartingPos.y + nSpriteHeight).IsContainedBy(SpriteSheet.GetRect()));
@@ -54,6 +55,6 @@ void Animation::Update(float fElapsedTime)
 
 void Animation::Draw(Vei2 pos, Graphics& gfx) const
 {
-	gfx.DrawSprite(pos, SpriteSheet, frames[nCurrentFrame]);
+	gfx.DrawSprite(pos, SpriteSheet, frames[nCurrentFrame], chroma);
 }
 

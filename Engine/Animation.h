@@ -9,7 +9,7 @@ class Animation
 {
 public:
 	Animation() = delete;
-	Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime);
+	Animation(Surface& SpriteSheet, Vei2 StartingPos, int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime, Color chroma = Colors::Magenta);
 
 	int GetCurrentFrame() const;
 
@@ -24,6 +24,7 @@ private:
 	const int nSpriteHeight = -1;
 
 	std::vector<RectI> frames;
+	Color chroma;
 
 	int nCurrentFrame = 0;
 	const int nFrames = -1;

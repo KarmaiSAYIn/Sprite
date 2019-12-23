@@ -10,7 +10,7 @@ Character::Character(const Vec2& pos, Surface& SpriteSheet, const Vei2& SpriteSh
 {
 	const int nSequences = 4;
 	for (int y = 0; y < nSequences; y++)
-		SequenceAnimations.emplace_back(SpriteSheet, Vei2(SpriteSheetPos.x, y * nSpriteHeight), nSpriteWidth, nSpriteHeight, nFrames, fFrameTime);
+		SequenceAnimations.emplace_back(SpriteSheet, Vei2(SpriteSheetPos.x, y * nSpriteHeight + SpriteSheetPos.y), nSpriteWidth, nSpriteHeight, nFrames, fFrameTime);
 }
 
 void Character::StopMovment()

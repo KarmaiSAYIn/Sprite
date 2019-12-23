@@ -31,7 +31,7 @@ Surface::Surface(std::string filename)
 	else
 	{
 		yStart = height - 1;
-		yEnd = 0;
+		yEnd = -1;
 		yDelta = -1;
 	}
 

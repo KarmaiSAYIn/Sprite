@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	font("Fixedsys16x28.bmp", 16, 28, 32)
 {
 }
 
@@ -69,5 +70,9 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	for (int y = 0; y < gfx.ScreenHeight; y++)
+		for (int x = 0; x < gfx.ScreenWidth; x++)
+			gfx.PutPixel(x, y, Colors::White);
 	character.Draw(gfx);
+	font.Render("Becky,\nlemme smash.", wnd.mouse.GetPos(), gfx, Colors::Black);
 }

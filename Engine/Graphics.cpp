@@ -321,12 +321,12 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawSprite(Vei2 pos, const Surface& surf, Color chroma)
+void Graphics::DrawSprite(const Vei2& pos, const Surface& surf, Color chroma)
 {
 	DrawSprite(pos, surf, surf.GetRect(), chroma);
 }
 
-void Graphics::DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, Color chroma)
+void Graphics::DrawSprite(const Vei2& pos, const Surface& surf, RectI SourceArea, Color chroma)
 {
 	DrawSprite(pos, surf, SourceArea, GetScreenRect(), chroma);
 }
@@ -372,12 +372,62 @@ void Graphics::DrawSprite(Vei2 pos, const Surface& surf, RectI SourceArea, RectI
 	}
 }
 
-void Graphics::DrawSpriteNonChroma(Vei2 pos, const Surface& surf)
+void Graphics::DrawSpriteSubstitution(const Vei2& pos, const Surface& surf, Color chroma, Color Substitution)
+{
+	DrawSpriteSubstitution(pos, surf, surf.GetRect(), chroma, Substitution);
+}
+
+void Graphics::DrawSpriteSubstitution(const Vei2& pos, const Surface& surf, RectI SourceArea, Color chroma, Color Substitution)
+{
+	DrawSpriteSubstitution(pos, surf, SourceArea, GetScreenRect(), chroma, Substitution);
+}
+
+void Graphics::DrawSpriteSubstitution(Vei2 pos, const Surface& surf, RectI SourceArea, RectI ClipArea, Color chroma, Color Substitution)
+{
+	assert(SourceArea.left >= 0);
+	assert(SourceArea.top >= 0);
+	assert(SourceArea.bottom <= surf.GetHeight());
+	assert(SourceArea.right <= surf.GetWidth());
+	if (pos.x < ClipArea.left)
+	{
+		const unsigned int offset = ClipArea.left - pos.x;
+		SourceArea.left += offset;
+		pos.x += offset;
+	}
+
+	if (pos.y < ClipArea.top)
+	{
+		const unsigned int offset = ClipArea.top - pos.y;
+		SourceArea.top += offset;
+		pos.y += offset;
+	}
+
+	if (pos.x + SourceArea.GetWidth() > ClipArea.right)
+	{
+		SourceArea.right -= pos.x + SourceArea.GetWidth() - ClipArea.right;
+	}
+
+	if (pos.y + SourceArea.GetHeight() > ClipArea.bottom)
+	{
+		SourceArea.bottom -= pos.y + SourceArea.GetHeight() - ClipArea.bottom;
+	}
+
+	for (int py = SourceArea.top; py < SourceArea.bottom; py++)
+	{
+		for (int px = SourceArea.left; px < SourceArea.right; px++)
+		{
+			if (surf.GetPixel(px, py) != chroma)
+				PutPixel(px + pos.x - SourceArea.left, py + pos.y - SourceArea.top, Substitution);
+		}
+	}
+}
+
+void Graphics::DrawSpriteNonChroma(const Vei2& pos, const Surface& surf)
 {
 	DrawSpriteNonChroma(pos, surf, RectI(0, surf.GetWidth(), 0, surf.GetHeight()));
 }
 
-void Graphics::DrawSpriteNonChroma(Vei2 pos, const Surface& surf, const RectI& SourceArea)
+void Graphics::DrawSpriteNonChroma(const Vei2& pos, const Surface& surf, const RectI& SourceArea)
 {
 	DrawSpriteNonChroma(pos, surf, SourceArea, GetScreenRect());
 }

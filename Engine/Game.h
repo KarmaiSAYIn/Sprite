@@ -27,6 +27,7 @@
 #include "Vei2.h"
 #include "Character.h"
 #include "Time.h"
+#include "Font.h"
 
 class Game
 {
@@ -48,6 +49,7 @@ private:
 	/*  User Variables              */
 	Time time;
 	Surface surf = Surface("link90x90.bmp");
-	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.525f, 110.0f);
+	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.095f, 200.0f);
+	Font font;
 	/********************************/
 };
