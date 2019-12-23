@@ -25,7 +25,7 @@ Surface::Surface(std::string filename)
 	{
 		height *= -1;
 		yStart = 0;
-		yEnd = height - 1;
+		yEnd = height;
 		yDelta = 1;
 	}
 	else
