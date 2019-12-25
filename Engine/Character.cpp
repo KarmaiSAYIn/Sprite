@@ -48,6 +48,11 @@ void Character::SetDirection(const Vei2& dir)
 	SequenceAnimations[(int)currSequence].SetFrame(lastSequenceFrame);
 }
 
+void Character::ActivateDamageIndicator()
+{
+	bDamageIndicatorActive = true;
+}
+
 void Character::Update(const float fElapsedTime, const Vec2& delta_pos)
 {
 	if (MovementState == MovementStates::Standing && !(std::abs(delta_pos.x) + std::abs(delta_pos.y) > 0))
@@ -60,9 +65,22 @@ void Character::Update(const float fElapsedTime, const Vec2& delta_pos)
 		StartMovment();
 		pos += delta_pos * fElapsedTime * fSpeed; 
 	}
+
+	if (bDamageIndicatorActive)
+	{
+		fDamageIndicatorElapsedTime += fElapsedTime;
+		if (fDamageIndicatorElapsedTime >= fDamageIndicatorTime)
+		{
+			bDamageIndicatorActive = false;
+			fDamageIndicatorElapsedTime = 0.0f;
+		}
+	}
 }
 
 void Character::Draw(Graphics& gfx) const
 {
-	SequenceAnimations[(int)currSequence].Draw((Vei2)pos, gfx);
+	if (!bDamageIndicatorActive)
+		SequenceAnimations[(int)currSequence].Draw((Vei2)pos, gfx);
+	else
+		SequenceAnimations[(int)currSequence].Draw((Vei2)pos, gfx, Colors::Red);
 }

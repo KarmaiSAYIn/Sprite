@@ -10,13 +10,13 @@
 class Character
 {
 public:
-
 	Character(const Vec2& pos, Surface& SpriteSheet, const Vei2& SpriteSheetPos,
 		int nSpriteWidth, int nSpriteHeight, int nFrames, float fFrameTime, float fSpeed, Color chroma = Colors::Magenta);
 
 	void StopMovment();
 	void StartMovment();
 	void SetDirection(const Vei2& dir);
+	void ActivateDamageIndicator();
 	void Update(const float fElapsedTime, const Vec2& delta_pos);
 	void Draw(Graphics& gfx) const;
 
@@ -43,5 +43,8 @@ private:
 	std::vector<Animation> SequenceAnimations;
 
 	float fSpeed = -1.0f;
+	float fDamageIndicatorElapsedTime = 0.0f;
+	static constexpr float fDamageIndicatorTime = 0.5f;
+	bool bDamageIndicatorActive = false;
 };
 

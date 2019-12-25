@@ -17,6 +17,7 @@ public:
 	void SetToStandingFrame();
 	void Update(float fElapsedTime);
 	void Draw(Vei2 pos, Graphics& gfx) const;
+	void Draw(Vei2 pos, Graphics& gfx, Color NonChromaSubstitution) const;
 
 private:
 	Surface& SpriteSheet;

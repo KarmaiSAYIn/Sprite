@@ -65,6 +65,13 @@ void Game::UpdateModel()
 		delta_pos.x = 1.0f;
 	}
 
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		auto e = wnd.kbd.ReadKey();
+		if (e.GetCode() == VK_SPACE && e.IsPress())
+			character.ActivateDamageIndicator();
+	}
+
 	character.Update(time.Mark(), delta_pos);
 }
 
@@ -73,6 +80,8 @@ void Game::ComposeFrame()
 	for (int y = 0; y < gfx.ScreenHeight; y++)
 		for (int x = 0; x < gfx.ScreenWidth; x++)
 			gfx.PutPixel(x, y, Colors::White);
-	character.Draw(gfx);
 	font.Render("Becky,\nlemme smash.", wnd.mouse.GetPos(), gfx, Colors::Black);
+	character.Draw(gfx);
+
+	gfx.DrawSpriteNonChroma({ 100, 100 }, testsurf);
 }

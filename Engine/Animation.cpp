@@ -58,3 +58,8 @@ void Animation::Draw(Vei2 pos, Graphics& gfx) const
 	gfx.DrawSprite(pos, SpriteSheet, frames[nCurrentFrame], chroma);
 }
 
+void Animation::Draw(Vei2 pos, Graphics& gfx, Color NonChromaSubstitution) const
+{
+	gfx.DrawSpriteSubstitution(pos, SpriteSheet, frames[nCurrentFrame], chroma, NonChromaSubstitution);
+}
+

@@ -176,5 +176,8 @@
     <Image Include="Fixedsys16x28.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="SpaceShipSpriteSheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

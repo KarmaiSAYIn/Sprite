@@ -3,56 +3,33 @@
 #include "Windows.h"
 #include <fstream>
 #include <assert.h>
+#include <algorithm>
 
 
 Surface::Surface(std::string filename)
 {
 	std::ifstream in(filename, std::ios::binary);
+
+	//Find file format.
 	BITMAPFILEHEADER bmpFileH;
-	BITMAPINFOHEADER bmpInfoH;
-
+	PNG png;
 	in.read(reinterpret_cast<char*>(&bmpFileH), sizeof(bmpFileH));
-	in.read(reinterpret_cast<char*>(&bmpInfoH), sizeof(bmpInfoH));
+	in.seekg(0);
+	in.read(reinterpret_cast<char*>(&png.signature), sizeof(png.signature));
+	in.seekg(0);
 
-	assert(bmpInfoH.biBitCount == 24 || bmpInfoH.biBitCount == 32);
-	assert(bmpInfoH.biCompression == BI_RGB);
-
-	width = bmpInfoH.biWidth;
-	height = bmpInfoH.biHeight;
-
-	int yStart, yEnd, yDelta;
-	if (height < 0)
+	assert(bmpFileH.bfType == 19778 || png.signature == PNG::GetSignature());
+	if (bmpFileH.bfType == 19778)
 	{
-		height *= -1;
-		yStart = 0;
-		yEnd = height;
-		yDelta = 1;
+		//File format is BMP.
+		LoadBmpImage(in);
 	}
-	else
+	else if (png.signature == PNG::GetSignature())
 	{
-		yStart = height - 1;
-		yEnd = -1;
-		yDelta = -1;
+		//File format is PNG.
+		LoadPngImage(in);
 	}
 
-	pPixels = new Color[width * height];
-
-	in.seekg(bmpFileH.bfOffBits);
-	const int padding = (4 - (width * 3) % 4) % 4;
-	for (int y = yStart; y != yEnd; y += yDelta)
-	{
-		for (int x = 0; x < width; x++)
-		{
-			Color c;
-			if (bmpInfoH.biBitCount == 32)
-				c = Color(in.get(), in.get(), in.get(), in.get());
-			else
-				c = Color(in.get(), in.get(), in.get());
-
-			PutPixel(x, y, c);
-		}
-		in.seekg(padding, std::ios::cur);
-	}
 }
 
 Surface::Surface(const Surface& CopySurface)
@@ -112,4 +89,73 @@ void Surface::PutPixel(int x, int y, Color c) const
 	assert(y >= 0);
 	assert(y < height);
 	pPixels[y * width + x] = c;
+}
+
+void Surface::LoadBmpImage(std::ifstream& in)
+{
+	BITMAPFILEHEADER bmpFileH;
+	BITMAPINFOHEADER bmpInfoH;
+
+	in.read(reinterpret_cast<char*>(&bmpFileH), sizeof(bmpFileH));
+	in.read(reinterpret_cast<char*>(&bmpInfoH), sizeof(bmpInfoH));
+
+	assert(bmpInfoH.biBitCount == 24 || bmpInfoH.biBitCount == 32);
+	assert(bmpInfoH.biCompression == BI_RGB);
+
+	width = bmpInfoH.biWidth;
+	height = bmpInfoH.biHeight;
+
+	int yStart, yEnd, yDelta;
+	if (height < 0)
+	{
+		height *= -1;
+		yStart = 0;
+		yEnd = height;
+		yDelta = 1;
+	}
+	else
+	{
+		yStart = height - 1;
+		yEnd = -1;
+		yDelta = -1;
+	}
+
+	pPixels = new Color[width * height];
+
+	in.seekg(bmpFileH.bfOffBits);
+	const int padding = (4 - (width * 3) % 4) % 4;
+	for (int y = yStart; y != yEnd; y += yDelta)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			Color c;
+			if (bmpInfoH.biBitCount == 32)
+				c = Color(in.get(), in.get(), in.get(), in.get());
+			else
+				c = Color(in.get(), in.get(), in.get());
+
+			PutPixel(x, y, c);
+		}
+		in.seekg(padding, std::ios::cur);
+	}
+}
+
+auto ReverseFourBytes(int32_t& pReverseInt, int size = sizeof(int32_t))
+{
+	char* pStart = reinterpret_cast<char*>(&pReverseInt);
+	char* pEnd = pStart + size;
+	std::reverse(pStart, pEnd); 
+}
+
+void Surface::LoadPngImage(std::ifstream& in)
+{
+	PNG png;
+
+	in.read(reinterpret_cast<char*>(&png), sizeof(png));
+	ReverseFourBytes(png.ImageHeader.FieldSize);
+	ReverseFourBytes(png.ImageHeader.width);
+	ReverseFourBytes(png.ImageHeader.height);
+
+	assert(png.signature == PNG::GetSignature());
+	assert(png.ImageHeader.TypeCode == PNG::IHDR::GetTypeCode());
 }

@@ -49,6 +49,7 @@ private:
 	/*  User Variables              */
 	Time time;
 	Surface surf = Surface("link90x90.bmp");
+	Surface testsurf = Surface("SpaceShipSpriteSheet.png");
 	Character character = Character(Vec2{ 100.0f, 100.0f }, surf, Vei2{ 0, 0 }, 90, 90, 5, 0.095f, 200.0f);
 	Font font;
 	/********************************/
