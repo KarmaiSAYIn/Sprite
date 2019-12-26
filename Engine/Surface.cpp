@@ -158,4 +158,41 @@ void Surface::LoadPngImage(std::ifstream& in)
 
 	assert(png.signature == PNG::GetSignature());
 	assert(png.ImageHeader.TypeCode == PNG::IHDR::GetTypeCode());
+	assert(png.ImageHeader.CompressionMethod == 0);
+	assert(png.ImageHeader.FilterMethod == 0);
+	assert(png.ImageHeader.InterlaceMethod == 0); //not supporting Adam7.
+
+	width = png.ImageHeader.width;
+	height = png.ImageHeader.height;
+
+	std::string s;
+	while (in)
+	{
+		s += in.get();
+	}
+	int IDAToffset = s.find("IDAT");
+	assert(IDAToffset != std::string::npos);
+	in.seekg(0, IDAToffset - 4);
+
+	pPixels = new Color[width * height];
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			switch (png.ImageHeader.ColorType)
+			{
+			case 0:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 6:
+				break;
+			}
+		}
+	}
 }

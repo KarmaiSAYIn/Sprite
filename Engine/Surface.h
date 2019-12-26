@@ -29,6 +29,14 @@ private:
 	{
 		int64_t signature = 727905341920923785;
 		static int64_t GetSignature() { return 727905341920923785; }
+
+		struct Chunk
+		{
+			int32_t FieldSize;
+			char TypeCode[4];
+			int32_t CRC;
+		};
+
 		struct IHDR
 		{
 			int32_t FieldSize;
@@ -38,11 +46,25 @@ private:
 			int32_t height;
 			int8_t BitDepth;
 			int8_t ColorType;
-			int8_t CompressionMehtod;
+			int8_t CompressionMethod;
 			int8_t FilterMethod;
 			int8_t InterlaceMethod;
 			int32_t CRC;
 		} ImageHeader;
+
+		struct PLTE
+		{
+			int32_t FieldSize;
+			char TypeCode[4] = { 'P', 'L', 'T', 'E' };
+			int32_t width;
+			int32_t height;
+			int8_t BitDepth;
+			int8_t ColorType;
+			int8_t CompressionMethod;
+			int8_t FilterMethod;
+			int8_t InterlaceMethod;
+			int32_t CRC;
+		};
 	};
 
 private:
